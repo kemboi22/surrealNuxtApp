@@ -1,5 +1,7 @@
 <script lang="ts" setup>
 import type {DatabaseConnection, DatabaseInfo, NamespaceInfo, RootInfo} from "~/types";
+// @ts-ignore
+import Prism from 'prismjs'
 
 const root = ref<RootInfo[]>([])
 const namespaces = ref<NamespaceInfo[]>([])
@@ -16,6 +18,8 @@ const getInfo = async () => {
   // @ts-ignore
   credentials.value = data.value?.data.credentials
 }
+
+
 getInfo()
 </script>
 
@@ -24,7 +28,7 @@ getInfo()
     <div class="grid grid-cols-3 gap-4">
       <UICard v-for="(namespace, index) in namespaces" :key="index">
         <UICardHeader>
-          <UICardTitle>Namespace Name: {{credentials.namespace}}</UICardTitle>
+          <UICardTitle>Namespace Name: {{ credentials.namespace }}</UICardTitle>
         </UICardHeader>
         <UICardContent>
           <div>
@@ -36,13 +40,24 @@ getInfo()
       </UICard>
       <UICard v-for="(database, index) in databases" :key="index">
         <UICardHeader>
-          <UICardTitle>Database Name: {{credentials.database}}</UICardTitle>
+          <UICardTitle>Database Name: {{ credentials.database }}</UICardTitle>
         </UICardHeader>
         <UICardContent>
-          <div>
-            <p v-for="(tableName, tableValue) in database.tables" :key="tableName">
-              {{ tableName }}: {{ tableValue }}
-            </p>
+          <div class="flex justify-center"><span class="text-2xl font-bold">TABLES</span></div>
+          <div class="mb-4 grid grid-cols-1 items-start pb-4 last:mb-0 last:pb-0" v-for="(tableCode,
+          tableValue) in database.tables" :key="tableCode">
+            <div class="space-y-1">
+              <p class="text-sm font-medium leading-none flex justify-between">
+                <span class="font-semibold text-xl"> {{ tableValue.toString().toUpperCase() }}</span>
+                <NuxtLink :to="`/table/${tableValue}`" class="text-sm text-blue-500 hover:underline">
+                  See More Details
+                </NuxtLink>
+              </p>
+              <p class="text-sm text-muted-foreground">
+                <code>{{ tableCode }}</code>
+              </p>
+            </div>
+            <UISeparator :decorative="true"/>
           </div>
         </UICardContent>
       </UICard>

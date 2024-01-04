@@ -32,7 +32,8 @@ export const useDatabaseStore = defineStore("database", () => {
                 title: "Database Connection",
                 description: data.value?.message,
                 class: 'bg-green-500 hover:bg-green-600',
-                duration: 1000
+                duration: 1000,
+                variant: "default"
             } )
             isLoading.value = false
             storageId.value = <string>data.value?.id

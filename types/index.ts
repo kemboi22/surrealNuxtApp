@@ -79,3 +79,21 @@ export interface DatabaseInfo {
         [key: string]: string;
     };
 }
+
+export interface TableInfo {
+    events: {
+        [key: string]: string;
+    };
+    fields: {
+        [key: string]: string;
+    },
+    indexes: {
+        [key: string]: string;
+    },
+    lives: {
+        [key: string]: string;
+    },
+    tables: {
+        [key: string]: string;
+    }
+}
